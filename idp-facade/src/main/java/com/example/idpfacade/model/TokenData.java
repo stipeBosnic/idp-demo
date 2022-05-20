@@ -19,6 +19,11 @@ public class TokenData {
         this.token = token;
     }
 
+    public TokenData(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public TokenData(String clientId, String clientSecret, String token) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;

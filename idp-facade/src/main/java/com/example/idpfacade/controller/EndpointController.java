@@ -1,7 +1,6 @@
 package com.example.idpfacade.controller;
 
 import com.example.idpfacade.model.TokenData;
-import org.keycloak.Token;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -39,20 +38,8 @@ public class EndpointController {
         httpServletResponse.setHeader("Location", endpoints);
         httpServletResponse.setStatus(302);
     }
-
-    @GetMapping("/logout")
-    public void logout(@RequestParam String refreshToken) throws Exception {
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("client_id", clientId);
-        map.add("client_secret", clientSecret);
-        map.add("refresh_token", refreshToken);
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);
-        restTemplate.postForObject(keycloakLogout, request, String.class);
-    }
-
-    @PostMapping("/userlogout")
-    public void logout(@RequestBody TokenData tokenData) throws Exception {
+    @PostMapping("/logout")
+    public void logout(@RequestBody TokenData tokenData) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("client_id", clientId);
         map.add("client_secret", clientSecret);
@@ -61,17 +48,7 @@ public class EndpointController {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);
         restTemplate.postForObject(keycloakLogout, request, String.class);
     }
-
-    @GetMapping(path = "/userinfo")
-    public String getUserInfo(@RequestParam String token) {
-        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-        headers.add("Authorization", "Bearer "+token);
-        headers.add("Content-Type", "application/x-www-form-urlencoded");
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(null, headers);
-        return restTemplate.postForObject(keycloakUserInfo, request, String.class);
-    }
-    @PostMapping(path = "/getuserinfo")
+    @PostMapping(path = "/userinfo")
     public String getUserInfo(@RequestBody TokenData tokenData) {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("Authorization", "Bearer "+tokenData.getToken());
@@ -80,49 +57,23 @@ public class EndpointController {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(null, headers);
         return restTemplate.postForObject(keycloakUserInfo, request, String.class);
     }
-
     @PostMapping(path = "/introspect")
-    public String  getIntrospect(@RequestParam String token) {
+    public String getIntrospect(@RequestBody TokenData tokenData) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("client_id", clientId);
         map.add("client_secret", clientSecret);
-        map.add("token", token);
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);
-        return restTemplate.postForObject(keycloakIntrospect, request, String.class);
-    }
-
-    @PostMapping(path = "/getintrospect")
-    public String getIntrospect(@RequestBody TokenData tokenData) {
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("client_id", tokenData.getClientId());
-        map.add("client_secret", tokenData.getClientSecret());
         map.add("token", tokenData.getToken());
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);
         return restTemplate.postForObject(keycloakIntrospect, request, String.class);
     }
-
     @PostMapping("/token")
-    public String getToken() {
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("username", username);
-        map.add("password", userPassword);
-        map.add("client_id", clientId);
-        map.add("client_secret", clientSecret);
-        map.add("grant_type", "password");
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);
-        return restTemplate.postForObject(keycloakToken, request, String.class);
-    }
-
-    @PostMapping("/gettoken")
     public String getToken(@RequestBody TokenData data) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("username", data.getUsername());
         map.add("password", data.getPassword());
-        map.add("client_id", data.getClientId());
-        map.add("client_secret", data.getClientSecret());
+        map.add("client_id", clientId);
+        map.add("client_secret", clientSecret);
         map.add("grant_type", "password");
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);

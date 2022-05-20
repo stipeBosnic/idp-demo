@@ -2,7 +2,6 @@ package com.example.backendexampleapp.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

@@ -14,25 +14,25 @@ public class FacadeEndpointController {
     public String logout(@RequestParam String refreshToken) {
         TokenData data = TokenData.createRefresherToken(refreshToken);
         HttpEntity<TokenData> request = new HttpEntity<>(data, null);
-        return restTemplate.postForObject("http://localhost:8090/userlogout", request, String.class);
+        return restTemplate.postForObject("http://localhost:8090/logout", request, String.class);
     }
 
     @PostMapping("/token")
-    public String getToken(@RequestParam String username, @RequestParam String password, @RequestParam String clientId, @RequestParam String clientSecret) {
-        TokenData data = new TokenData(username, password, clientId, clientSecret);
+    public String getToken(@RequestParam String username, @RequestParam String password) {
+        TokenData data = new TokenData(username, password);
         HttpEntity<TokenData> request = new HttpEntity<>(data, null);
-        return restTemplate.postForObject("http://localhost:8090/gettoken", request, String.class);
+        return restTemplate.postForObject("http://localhost:8090/token", request, String.class);
     }
     @PostMapping(path = "/introspect")
-    public String  getIntrospect(@RequestParam String clientId, @RequestParam String clientSecret, @RequestParam String token) {
-        TokenData data = new TokenData(clientId, clientSecret, token);
+    public String  getIntrospect(@RequestParam String token) {
+        TokenData data = new TokenData(token);
         HttpEntity<TokenData> request = new HttpEntity<>(data, null);
-        return restTemplate.postForObject("http://localhost:8090/getintrospect", request, String.class);
+        return restTemplate.postForObject("http://localhost:8090/introspect", request, String.class);
     }
     @GetMapping(path = "/userinfo")
     public String getUserInfo(@RequestParam String token) {
         TokenData data = new TokenData(token);
         HttpEntity<TokenData> request = new HttpEntity<>(data, null);
-        return restTemplate.postForObject("http://localhost:8090/getuserinfo", request, String.class);
+        return restTemplate.postForObject("http://localhost:8090/userinfo", request, String.class);
     }
 }

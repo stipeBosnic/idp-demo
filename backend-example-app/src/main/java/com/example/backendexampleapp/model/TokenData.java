@@ -1,6 +1,5 @@
 package com.example.backendexampleapp.model;
 
-import antlr.Token;
 import lombok.*;
 
 @Getter
@@ -20,6 +19,11 @@ public class TokenData {
 
     public TokenData(String token) {
         this.token = token;
+    }
+
+    public TokenData(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public TokenData(String clientId, String clientSecret, String token) {
