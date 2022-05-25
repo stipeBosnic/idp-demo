@@ -32,7 +32,6 @@ public class EndpointController {
     private String userPassword;
     private final RestTemplate restTemplate = new RestTemplate();
 
-
     @GetMapping("/endpoints")
     public void getEndpoints(HttpServletResponse httpServletResponse) {
         httpServletResponse.setHeader("Location", endpoints);
