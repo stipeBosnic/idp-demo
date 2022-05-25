@@ -1,10 +1,10 @@
 package com.example.idpfacade.keycloakTest;
 
 import dasniko.testcontainers.keycloak.KeycloakContainer;
+import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,8 +23,6 @@ public class SimpleKeycloakTest {
 
         String authServerUrl = keycloakContainer.getAuthServerUrl();
         System.out.println(authServerUrl);
-        System.out.println(keycloakContainer.getAdminPassword());
-        System.out.println(keycloakContainer.getAdminUsername());
 
         String accessToken = given()
                 .contentType("application/x-www-form-urlencoded")
@@ -33,12 +31,29 @@ public class SimpleKeycloakTest {
                         "password", "mate",
                         "grant_type", "password",
                         "client_id", "idp-facade",
-                        "client_secret", "NfPFBF9Cjqfpd7GcOH6uVVQ9EevZHfBf"
+                        "client_secret", "secret"
                 ))
                 .post(authServerUrl+"/realms/idp-provider/protocol/openid-connect/token")
                 .then().assertThat().statusCode(200)
                 .extract().path("access_token");
 
         System.out.println("My access token: "+accessToken);
+    }
+    @Test
+    public void testKeycloakUnauthorizedUser() {
+
+        String authServerUrl = keycloakContainer.getAuthServerUrl();
+
+        ValidatableResponse response = given()
+                .contentType("application/x-www-form-urlencoded")
+                .formParams(Map.of(
+                        "username", "unknownUser",
+                        "password", "unknownPassword",
+                        "grant_type", "password",
+                        "client_id", "idp-facade",
+                        "client_secret", "secret"
+                ))
+                .post(authServerUrl+"/realms/idp-provider/protocol/openid-connect/token")
+                .then().assertThat().statusCode(401);
     }
 }
