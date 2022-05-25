@@ -88,7 +88,7 @@ class EndpointControllerTest {
 
         String authServerUrl = keycloakContainer.getAuthServerUrl();
 
-        String accessToken = given()
+        return given()
                 .contentType("application/x-www-form-urlencoded")
                 .formParams(Map.of(
                         "username", username,
@@ -100,14 +100,12 @@ class EndpointControllerTest {
                 .post(authServerUrl+"/realms/idp-provider/protocol/openid-connect/token")
                 .then().assertThat().statusCode(200)
                 .extract().path("access_token");
-        return accessToken;
+
     }
     public String getRefreshToken(String username, String password) {
 
         String authServerUrl = keycloakContainer.getAuthServerUrl();
-
-
-        String refreshToken = given()
+        return given()
                 .contentType("application/x-www-form-urlencoded")
                 .formParams(Map.of(
                         "username", username,
@@ -119,7 +117,6 @@ class EndpointControllerTest {
                 .post(authServerUrl+"/realms/idp-provider/protocol/openid-connect/token")
                 .then().assertThat().statusCode(200)
                 .extract().path("refresh_token");
-        return refreshToken;
     }
 
 }
