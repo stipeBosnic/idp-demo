@@ -18,5 +18,4 @@ public class ProtectedDataController {
     public List<ProtectedData> getProtectedData(@RequestParam String token) {
         return protectedDataService.getProtectedData(token);
     }
-
 }

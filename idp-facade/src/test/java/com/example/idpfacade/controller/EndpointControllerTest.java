@@ -1,5 +1,6 @@
 package com.example.idpfacade.controller;
 
+import com.example.idpfacade.model.TokenData;
 import dasniko.testcontainers.keycloak.KeycloakContainer;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.Test;
@@ -68,6 +69,9 @@ class EndpointControllerTest {
     @Test
     void getToken() {
         String authServerUrl = keycloakContainer.getAuthServerUrl();
+        TokenData data = new TokenData("mate", "mate");
+        EndpointController endpointController = new EndpointController();
+        String token = endpointController.getToken(data);
 
         String response = given()
                 .contentType("application/x-www-form-urlencoded")
