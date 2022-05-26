@@ -2,6 +2,7 @@ package com.example.idpfacade.keycloakTest;
 
 import dasniko.testcontainers.keycloak.KeycloakContainer;
 import io.restassured.response.ValidatableResponse;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -17,6 +18,7 @@ public class SimpleKeycloakTest {
             .withRealmImportFile("/idp-provider-realm.json");
 
     @Test
+    @DisplayName("Test if keycloak sends the token when given valid data")
     public void testKeycloak() {
 
         assertTrue(keycloakContainer.isRunning());
@@ -40,6 +42,7 @@ public class SimpleKeycloakTest {
         System.out.println("My access token: "+accessToken);
     }
     @Test
+    @DisplayName("Test if unauthorized user can access the token")
     public void testKeycloakUnauthorizedUser() {
 
         String authServerUrl = keycloakContainer.getAuthServerUrl();
