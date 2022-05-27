@@ -12,14 +12,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @Testcontainers
-public class SimpleKeycloakTest {
+class SimpleKeycloakTest {
     @Container
     KeycloakContainer keycloakContainer = new KeycloakContainer("jboss/keycloak:16.1.1")
             .withRealmImportFile("/idp-provider-realm.json");
 
     @Test
     @DisplayName("Test if keycloak sends the token when given valid data")
-    public void testKeycloak() {
+    void testKeycloak() {
 
         assertTrue(keycloakContainer.isRunning());
 
@@ -43,7 +43,7 @@ public class SimpleKeycloakTest {
     }
     @Test
     @DisplayName("Test if unauthorized user can access the token")
-    public void testKeycloakUnauthorizedUser() {
+    void testKeycloakUnauthorizedUser() {
 
         String authServerUrl = keycloakContainer.getAuthServerUrl();
 

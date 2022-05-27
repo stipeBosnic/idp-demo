@@ -6,6 +6,7 @@ import com.example.backendexampleapp.repository.ProtectedDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -22,13 +23,11 @@ public class ProtectedDataService {
     ProtectedDataRepository protectedDataRepository;
     private final RestTemplate restTemplate = new RestTemplate();
 
-
-
     public List<ProtectedData> getProtectedData(String token) {
         TokenData data = new TokenData(token);
         HttpEntity<TokenData> request = new HttpEntity<>(data, null);
         ResponseEntity<String> response = restTemplate.exchange("http://localhost:8090/userinfo", HttpMethod.POST, request, String.class);
-        if (response.getStatusCodeValue() == 200) {
+        if (response.getStatusCode() == HttpStatus.OK) {
             return protectedDataRepository.findAll();
         } else {
             return null;

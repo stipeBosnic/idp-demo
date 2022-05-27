@@ -14,7 +14,7 @@ class FacadeEndpointServiceTest {
 
     @Test
     @DisplayName("Given a valid refresh token user logouts")
-    void tryToLogoutWithValidToken() {
+    void userLogoutsWithValidRefreshToken() {
         FacadeEndpointService facadeEndpointService = new FacadeEndpointService();
         String token =  facadeEndpointService.getToken("mate", "mate").getBody();
         Map jsonToken = new Gson().fromJson(token, Map.class);
@@ -25,7 +25,7 @@ class FacadeEndpointServiceTest {
 
     @Test
     @DisplayName("Given valid user data retrieve the token")
-    void getTokenWithValidData() {
+    void getTokenAfterGivingValidData() {
         FacadeEndpointService facadeEndpointService = new FacadeEndpointService();
         HttpStatus httpStatus = facadeEndpointService.getToken("mate", "mate").getStatusCode();
         assertEquals(HttpStatus.OK, httpStatus);
