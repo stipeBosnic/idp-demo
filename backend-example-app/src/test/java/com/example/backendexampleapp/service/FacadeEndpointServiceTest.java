@@ -12,11 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FacadeEndpointServiceTest {
 
+    private final FacadeEndpointService facadeEndpointService = new FacadeEndpointService();
+
     @Test
     @DisplayName("Given a valid refresh token user logouts")
     void userLogoutsWithValidRefreshToken() {
-        FacadeEndpointService facadeEndpointService = new FacadeEndpointService();
-        String token =  facadeEndpointService.getToken("mate", "mate").getBody();
+        String token = facadeEndpointService.getToken("mate", "mate").getBody();
         Map jsonToken = new Gson().fromJson(token, Map.class);
         String refreshToken = jsonToken.get("refresh_token").toString();
         HttpStatus httpStatus = facadeEndpointService.logout(refreshToken).getStatusCode();
@@ -24,9 +25,8 @@ class FacadeEndpointServiceTest {
     }
 
     @Test
-    @DisplayName("Given valid user data retrieve the token")
-    void getTokenAfterGivingValidData() {
-        FacadeEndpointService facadeEndpointService = new FacadeEndpointService();
+    @DisplayName("Given valid username and password receive the token")
+    void getTokenAfterProvidingData() {
         HttpStatus httpStatus = facadeEndpointService.getToken("mate", "mate").getStatusCode();
         assertEquals(HttpStatus.OK, httpStatus);
     }
@@ -34,8 +34,7 @@ class FacadeEndpointServiceTest {
     @Test
     @DisplayName("Given a valid user token receive token data")
     void getIntrospect() {
-        FacadeEndpointService facadeEndpointService = new FacadeEndpointService();
-        String token =  facadeEndpointService.getToken("mate", "mate").getBody();
+        String token = facadeEndpointService.getToken("mate", "mate").getBody();
         Map jsonToken = new Gson().fromJson(token, Map.class);
         String accessToken = jsonToken.get("access_token").toString();
         HttpStatus httpStatus = facadeEndpointService.getIntrospect(accessToken).getStatusCode();
@@ -45,8 +44,7 @@ class FacadeEndpointServiceTest {
     @Test
     @DisplayName("Given a valid access token user receives user info")
     void getUserInfo() {
-        FacadeEndpointService facadeEndpointService = new FacadeEndpointService();
-        String token =  facadeEndpointService.getToken("mate", "mate").getBody();
+        String token = facadeEndpointService.getToken("mate", "mate").getBody();
         Map jsonToken = new Gson().fromJson(token, Map.class);
         String acessToken = jsonToken.get("access_token").toString();
         HttpStatus httpStatus = facadeEndpointService.getUserInfo(acessToken).getStatusCode();
