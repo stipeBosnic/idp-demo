@@ -69,6 +69,5 @@ public class EndpointService {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);
         return restTemplate.postForObject(keycloakToken, request, String.class);
-
     }
 }

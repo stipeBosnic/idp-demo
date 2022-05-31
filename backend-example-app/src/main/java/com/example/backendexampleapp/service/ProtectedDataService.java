@@ -4,6 +4,7 @@ import com.example.backendexampleapp.model.ProtectedData;
 import com.example.backendexampleapp.model.TokenData;
 import com.example.backendexampleapp.repository.ProtectedDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -23,10 +24,13 @@ public class ProtectedDataService {
     ProtectedDataRepository protectedDataRepository;
     private final RestTemplate restTemplate = new RestTemplate();
 
+    @Value("${facade.protected-url}")
+    private String facadeProtectedUrl;
+
     public List<ProtectedData> getProtectedData(String token) {
         TokenData data = new TokenData(token);
         HttpEntity<TokenData> request = new HttpEntity<>(data, null);
-        ResponseEntity<String> response = restTemplate.exchange("http://localhost:8090/userinfo", HttpMethod.POST, request, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(facadeProtectedUrl, HttpMethod.POST, request, String.class);
         if (response.getStatusCode() == HttpStatus.OK) {
             return protectedDataRepository.findAll();
         } else {
@@ -37,7 +41,7 @@ public class ProtectedDataService {
     public ProtectedData getProtectedDataForOnePerson(String token, String insuranceNumber) {
         TokenData data = new TokenData(token);
         HttpEntity<TokenData> request = new HttpEntity<>(data, null);
-        ResponseEntity<String> response = restTemplate.exchange("http://localhost:8090/userinfo", HttpMethod.POST, request, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(facadeProtectedUrl, HttpMethod.POST, request, String.class);
         if (response.getStatusCodeValue() == 200) {
             return protectedDataRepository.findById(insuranceNumber).orElse(null);
         } else {

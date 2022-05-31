@@ -70,9 +70,6 @@ class EndpointControllerTest {
     void getToken() {
         String authServerUrl = keycloakContainer.getAuthServerUrl();
         TokenData data = new TokenData("mate", "mate");
-        EndpointController endpointController = new EndpointController();
-        String token = endpointController.getToken(data);
-
         String response = given()
                 .contentType("application/x-www-form-urlencoded")
                 .formParams(Map.of(

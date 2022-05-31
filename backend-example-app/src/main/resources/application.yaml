@@ -1,0 +1,6 @@
+facade:
+  userinfo-url: http://localhost:8090/userinfo
+  introspect-url: http://localhost:8090/introspect
+  logout-url: http://localhost:8090/logout
+  token-url: http://localhost:8090/token
+  protected-url: http://localhost:8090/userinfo
