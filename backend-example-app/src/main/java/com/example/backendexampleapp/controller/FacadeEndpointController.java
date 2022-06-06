@@ -11,6 +11,7 @@ public class FacadeEndpointController {
 
     @Autowired
     FacadeEndpointService facadeEndpointService;
+
     @GetMapping("/logout")
     public ResponseEntity<String> logout(@RequestParam String refreshToken) {
         return facadeEndpointService.logout(refreshToken);

@@ -3,8 +3,10 @@ package com.example.idpfacade.controller;
 import com.example.idpfacade.model.TokenData;
 import com.example.idpfacade.service.EndpointService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 @RestController
 public class EndpointController {
 
@@ -12,22 +14,22 @@ public class EndpointController {
     EndpointService endpointService;
 
     @PostMapping("/logout")
-    public void logout(@RequestBody TokenData tokenData) {
-        endpointService.logout(tokenData);
+    public ResponseEntity<String> logout(@RequestBody TokenData tokenData) {
+        return endpointService.logout(tokenData);
     }
 
     @PostMapping("/userinfo")
-    public String getUserInfo(@RequestBody TokenData tokenData) {
-        return endpointService.getUserInfo(tokenData);
+    public ResponseEntity<String> getUserInfo(@RequestBody TokenData tokenData) {
+        return endpointService.getUserinfo(tokenData);
     }
 
     @PostMapping("/introspect")
-    public String getIntrospect(@RequestBody TokenData tokenData) {
+    public ResponseEntity<String> getIntrospect(@RequestBody TokenData tokenData) {
         return endpointService.getIntrospect(tokenData);
     }
 
     @PostMapping("/token")
-    public String getToken(@RequestBody TokenData data) {
+    public ResponseEntity<String> getToken(@RequestBody TokenData data) {
         return endpointService.getToken(data);
     }
 }
