@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.client.RestTemplate;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -38,18 +38,17 @@ class FacadeEndpointControllerIT {
     @Autowired
     MockMvc mockMvc;
 
-    @MockBean
+    @SpyBean
     FacadeEndpointService facadeEndpointService;
 
     @MockBean
     RestTemplate restTemplate;
 
+    @SpyBean
     FacadeEndpointController facadeEndpointController;
 
     @BeforeEach
     void setUp() {
-        facadeEndpointService = new FacadeEndpointService(restTemplate);
-        facadeEndpointController = new FacadeEndpointController(facadeEndpointService);
         ReflectionTestUtils.setField(facadeEndpointService, "facadeTokenUrl", "http://localhost:8090/token");
         ReflectionTestUtils.setField(facadeEndpointService, "facadeLogoutUrl", "http://localhost:8090/logout");
         mockMvc = MockMvcBuilders.standaloneSetup(facadeEndpointController)

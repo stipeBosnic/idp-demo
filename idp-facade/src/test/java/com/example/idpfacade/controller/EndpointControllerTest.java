@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(EndpointController.class)
-public class EndpointControllerTest {
+class EndpointControllerTest {
 
     @SpyBean
     EndpointController endpointController;
@@ -30,6 +30,7 @@ public class EndpointControllerTest {
         when(endpointService.getToken(validInfo)).thenReturn(expectedResponse);
         assertEquals(expectedResponse, endpointController.getToken(validInfo));
     }
+
     @Test
     @DisplayName("Given invalid params to receive the token, response is 401 unauthorized")
     void tryToGetTokenWithInvalidParams() {

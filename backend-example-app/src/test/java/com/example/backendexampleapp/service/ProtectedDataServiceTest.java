@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +31,10 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 class ProtectedDataServiceTest {
 
-    @Mock
+    @MockBean
     private ProtectedDataRepository protectedDataRepository;
 
+    @SpyBean
     private ProtectedDataService protectedDataService;
 
     @MockBean
@@ -40,7 +42,6 @@ class ProtectedDataServiceTest {
 
     @BeforeEach
     public void setUp() {
-        protectedDataService = new ProtectedDataService(protectedDataRepository, restTemplate);
         ReflectionTestUtils.setField(protectedDataService, "facadeProtectedUrl", "http://localhost:8090/userinfo");
     }
 

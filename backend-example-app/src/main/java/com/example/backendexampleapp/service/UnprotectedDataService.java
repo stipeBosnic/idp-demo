@@ -19,12 +19,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class UnprotectedDataService {
 
-    @Autowired
-    UnprotectedDataRepository unprotectedDataRepository;
-
-    public UnprotectedDataService(UnprotectedDataRepository unprotectedDataRepository) {
-        this.unprotectedDataRepository = unprotectedDataRepository;
-    }
+    private final UnprotectedDataRepository unprotectedDataRepository;
 
     private final Date date = Date.from(Instant.now());
 

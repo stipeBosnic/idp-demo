@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -21,15 +23,10 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 class UnprotectedDataServiceTest {
 
-
+    @SpyBean
     UnprotectedDataService unprotectedDataService;
-    @Mock
+    @MockBean
     UnprotectedDataRepository unprotectedDataRepository;
-
-    @BeforeEach
-    void setUp() {
-        unprotectedDataService = new UnprotectedDataService(unprotectedDataRepository);
-    }
 
     @Test
     @DisplayName("Anyone receives unprotected data")

@@ -13,9 +13,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
-
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,7 +24,9 @@ public class ProtectedDataService {
 
     @Autowired
     private final ProtectedDataRepository protectedDataRepository;
-    private final RestTemplate restTemplate;
+
+    @Autowired
+    private final  RestTemplate restTemplate;
 
     @Value("${facade.protected-url}")
     private String facadeProtectedUrl;

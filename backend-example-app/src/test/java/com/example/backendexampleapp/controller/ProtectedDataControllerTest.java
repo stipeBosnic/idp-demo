@@ -41,10 +41,6 @@ class ProtectedDataControllerTest {
     @MockBean
     private ProtectedDataService protectedDataService;
 
-    @BeforeEach
-    void setUp() {
-        protectedDataController = new ProtectedDataController(protectedDataService);
-    }
 
     @Test
     @DisplayName("When given valid access token protected data is returned")

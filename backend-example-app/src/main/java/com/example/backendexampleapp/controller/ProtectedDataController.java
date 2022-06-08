@@ -3,6 +3,8 @@ package com.example.backendexampleapp.controller;
 import com.example.backendexampleapp.model.ProtectedData;
 import com.example.backendexampleapp.service.ProtectedDataService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProtectedDataController {
 
-    ProtectedDataService protectedDataService;
+    private final ProtectedDataService protectedDataService;
 
     @GetMapping("/protected")
     public List<ProtectedData> getProtectedData(@RequestParam String token ) {

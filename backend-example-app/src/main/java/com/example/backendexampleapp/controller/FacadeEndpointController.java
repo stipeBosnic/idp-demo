@@ -10,20 +10,23 @@ import org.springframework.web.bind.annotation.*;
 public class FacadeEndpointController {
 
 
-     private final FacadeEndpointService facadeEndpointService;
+    private final FacadeEndpointService facadeEndpointService;
 
     @GetMapping("/logout")
     public ResponseEntity<String> logout(@RequestParam String refreshToken) {
         return facadeEndpointService.logout(refreshToken);
     }
+
     @PostMapping("/token")
     public ResponseEntity<String> getToken(@RequestParam String username, @RequestParam String password) {
-       return facadeEndpointService.getToken(username, password);
+        return facadeEndpointService.getToken(username, password);
     }
+
     @PostMapping("/introspect")
     public ResponseEntity<String> getIntrospect(@RequestParam String token) {
         return facadeEndpointService.getIntrospect(token);
     }
+
     @GetMapping("/userinfo")
     public ResponseEntity<String> getUserInfo(@RequestParam String token) {
         return facadeEndpointService.getUserInfo(token);

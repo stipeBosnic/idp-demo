@@ -1,30 +1,19 @@
 package com.example.backendexampleapp.service;
 
-import com.example.backendexampleapp.model.TokenData;
-import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
-
-import java.net.URI;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -89,7 +78,5 @@ class FacadeEndpointServiceTest {
     @Test
     @DisplayName("Given an invalid username and password response if 401 unauthorized")
     void getTokenAfterProvidingInvalidData() {
-//        ResponseEntity<String> response = facadeEndpointService.getToken("invalid", "invalid");
-//        assertEquals(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("").getStatusCode(), response);
     }
 }
