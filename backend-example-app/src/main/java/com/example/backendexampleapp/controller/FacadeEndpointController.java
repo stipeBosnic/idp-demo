@@ -1,16 +1,16 @@
 package com.example.backendexampleapp.controller;
 
 import com.example.backendexampleapp.service.FacadeEndpointService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
+@RequiredArgsConstructor
 public class FacadeEndpointController {
 
-    @Autowired
-    FacadeEndpointService facadeEndpointService;
+
+     private final FacadeEndpointService facadeEndpointService;
 
     @GetMapping("/logout")
     public ResponseEntity<String> logout(@RequestParam String refreshToken) {

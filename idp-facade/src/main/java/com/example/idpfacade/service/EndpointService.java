@@ -33,7 +33,6 @@ public class EndpointService {
     @Value("${keycloak.resource}")
     private String clientId;
 
-
     public ResponseEntity<String> logout(TokenData tokenData) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("client_id", clientId);

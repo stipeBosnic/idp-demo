@@ -10,16 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -38,7 +34,6 @@ public class ProtectedDataService {
 
     public List<ProtectedData> getProtectedData(String token) {
         TokenData data = new TokenData(token);
-        List<ProtectedData> emptyList = new ArrayList<>();
         HttpEntity<TokenData> request = new HttpEntity<>(data, null);
         try {
             restTemplate.exchange(facadeProtectedUrl, HttpMethod.POST, request, String.class);
@@ -46,7 +41,6 @@ public class ProtectedDataService {
             return List.of();
         }
         return protectedDataRepository.findAll();
-
     }
 
     public ProtectedData getProtectedDataForOnePerson(String token, String insuranceNumber) {

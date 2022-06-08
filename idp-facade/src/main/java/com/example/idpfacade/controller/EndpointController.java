@@ -2,15 +2,16 @@ package com.example.idpfacade.controller;
 
 import com.example.idpfacade.model.TokenData;
 import com.example.idpfacade.service.EndpointService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@AllArgsConstructor
 public class EndpointController {
 
-    @Autowired
     EndpointService endpointService;
 
     @PostMapping("/logout")
