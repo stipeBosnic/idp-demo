@@ -56,21 +56,21 @@ class FacadeEndpointControllerIT {
 
     @Test
     @DisplayName("Given valid username and password receive the token")
-    void getToken() throws Exception {
+    void getTokenTest() throws Exception {
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.OK).body("validToken");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
 
         MvcResult mvcResult = mockMvc.perform(post("/token")
                         .param("username", "valid")
                         .param("password", "valid"))
-                        .andExpect(status().isOk())
-                        .andReturn();
+                .andExpect(status().isOk())
+                .andReturn();
         assertEquals(response.getBody(), mvcResult.getResponse().getContentAsString());
     }
 
     @Test
     @DisplayName("Given invalid username and password response is 401 UNAUTHORIZED")
-    void tryToGetTokenWithInvalidParams() throws Exception {
+    void tryToGetTokenWithInvalidParamsTest() throws Exception {
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
 
@@ -84,7 +84,7 @@ class FacadeEndpointControllerIT {
 
     @Test
     @DisplayName("Given empty string as username and password response is 401 UNAUTHORIZED")
-    void tryToGetTokenWithEmptyStringAsParams() throws Exception {
+    void tryToGetTokenWithEmptyStringAsParamsTest() throws Exception {
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
 
@@ -98,7 +98,7 @@ class FacadeEndpointControllerIT {
 
     @Test
     @DisplayName("Given valid refresh token user logouts")
-    void logout() throws Exception {
+    void logoutTest() throws Exception {
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
 
@@ -111,7 +111,7 @@ class FacadeEndpointControllerIT {
 
     @Test
     @DisplayName("Given an invalid refresh token response is 400 BAD REQUEST")
-    void tryToLogoutWithInvalidRefreshToken() throws Exception {
+    void tryToLogoutWithInvalidRefreshTokenTest() throws Exception {
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("keycloakMessage");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
         MvcResult mvcResult = mockMvc.perform(get("/logout")
@@ -123,21 +123,37 @@ class FacadeEndpointControllerIT {
 
     @Test
     @DisplayName("Given an empty string as refresh token response is 400 BAD REQUEST")
-    void tryToLogoutWithEmptyStringAsRefreshToken() throws Exception {
-        ResponseEntity<String> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("keycloakMessage");
-        when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
+    void tryToLogoutWithEmptyStringAsRefreshTokenTest() throws Exception {
+        ResponseEntity<String> expectedResponse = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("keycloakMessage");
+        when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(expectedResponse);
         MvcResult mvcResult = mockMvc.perform(get("/logout")
                         .param("refreshToken", ""))
                 .andExpect(status().isBadRequest())
                 .andReturn();
-        assertEquals(response.getStatusCodeValue(), mvcResult.getResponse().getStatus());
+        assertEquals(expectedResponse.getStatusCodeValue(), mvcResult.getResponse().getStatus());
     }
 
     @Test
-    void getIntrospect() {
+    @DisplayName("Given a valid token receive introspect info")
+    void getIntrospectTest() throws Exception {
+        ResponseEntity<String> expectedResponse = ResponseEntity.status(HttpStatus.OK).body("introspectInfo");
+        when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(expectedResponse);
+        MvcResult mvcResult = mockMvc.perform(post("/introspect")
+                        .param("token", "validToken"))
+                .andExpect(status().isOk())
+                .andReturn();
+        assertEquals(expectedResponse.getBody(), mvcResult.getResponse().getContentAsString());
     }
 
     @Test
-    void getUserInfo() {
+    @DisplayName("Given a valid token receive userinfo")
+    void getUserInfoTest() throws Exception {
+        ResponseEntity<String> expectedResponse = ResponseEntity.status(HttpStatus.OK).body("userinfo");
+        when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(expectedResponse);
+        MvcResult mvcResult = mockMvc.perform(get("/userinfo")
+                        .param("token", "validToken"))
+                .andExpect(status().isOk())
+                .andReturn();
+        assertEquals(expectedResponse.getBody(), mvcResult.getResponse().getContentAsString());
     }
 }
