@@ -36,9 +36,11 @@ class EndpointControllerIT {
 
     @Autowired
     MockMvc mockMvc;
+
+    @SpyBean
     EndpointController endpointController;
 
-    @MockBean
+    @SpyBean
     EndpointService endpointService;
     @MockBean
     RestTemplate restTemplate;
@@ -47,8 +49,6 @@ class EndpointControllerIT {
 
     @BeforeEach
     void setUp() {
-        endpointService = new EndpointService(restTemplate);
-        endpointController = new EndpointController(endpointService);
         ReflectionTestUtils.setField(endpointService, "clientId", "idp-facade");
         ReflectionTestUtils.setField(endpointService, "clientSecret", "NfPFBF9Cjqfpd7GcOH6uVVQ9EevZHfBf");
         ReflectionTestUtils.setField(endpointService, "keycloakToken", "http://localhost:8180/auth/realms/idp-provider/protocol/openid-connect/token");
