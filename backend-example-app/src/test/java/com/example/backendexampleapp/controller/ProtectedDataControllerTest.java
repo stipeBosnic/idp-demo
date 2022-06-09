@@ -19,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -65,9 +66,9 @@ class ProtectedDataControllerTest {
                 .build();
 
         List<ProtectedData> protectedData = List.of(person1, person2).stream().toList();
-        Mockito.when(protectedDataService.getProtectedData("validToken")).thenReturn(protectedData);
-        List<ProtectedData> response = protectedDataController.getProtectedData("validToken");
-        assertEquals(protectedData, response);
+        Mockito.when(protectedDataService.getProtectedData("validToken")).thenReturn(ResponseEntity.status(HttpStatus.OK).body(protectedData));
+        ResponseEntity<List<ProtectedData>> response = protectedDataController.getProtectedData("validToken");
+        assertEquals(protectedData, response.getBody());
     }
 
     @Test
@@ -84,46 +85,45 @@ class ProtectedDataControllerTest {
                 .build();
 
 
-        Mockito.when(protectedDataService.getProtectedDataForOnePerson("validToken", "insuranceNumber")).thenReturn(person);
-        ProtectedData response = protectedDataController.getProtectedDataForOnePerson("validToken", "insuranceNumber");
-        assertEquals(person, response);
+        Mockito.when(protectedDataService.getProtectedDataForOnePerson("validToken", "insuranceNumber")).thenReturn(ResponseEntity.status(HttpStatus.OK).body(person));
+        ResponseEntity<ProtectedData>  response = protectedDataController.getProtectedDataForOnePerson("validToken", "insuranceNumber");
+        assertEquals(person, response.getBody());
     }
 
     @Test
-    @DisplayName("When given a null access token empty list is returned")
+    @DisplayName("When given a null access token null is returned")
     void getProtectedDataWithNullToken() {
-
-        Mockito.when(protectedDataService.getProtectedData(null)).thenReturn(List.of());
-        List<ProtectedData> response = protectedDataController.getProtectedData(null);
-        assertEquals(List.of(), response);
+        ResponseEntity<List<ProtectedData>> expectedResponse = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        Mockito.when(protectedDataService.getProtectedData(null)).thenReturn(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null));
+        ResponseEntity<List<ProtectedData>> response = protectedDataController.getProtectedData(null);
+        assertEquals(expectedResponse.getStatusCode() , response.getStatusCode());
     }
 
     @Test
-    @DisplayName("When given an empty string as access token empty list is returned")
+    @DisplayName("When given an empty string as access token null is returned")
     void getProtectedDataWithEmptyToken() {
-
-        Mockito.when(protectedDataService.getProtectedData("")).thenReturn(List.of());
-        List<ProtectedData> response = protectedDataController.getProtectedData("");
-        assertEquals(List.of(), response);
-
+        ResponseEntity<List<ProtectedData>> expectedResponse = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        Mockito.when(protectedDataService.getProtectedData("")).thenReturn(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null));
+        ResponseEntity<List<ProtectedData>> response = protectedDataController.getProtectedData("");
+        assertEquals(expectedResponse.getStatusCode() , response.getStatusCode());
     }
 
     @Test
-    @DisplayName("When given an invalid access token empty list is returned")
+    @DisplayName("When given an invalid access token null is returned")
     void getProtectedDataWithInvalidToken() {
-
-        Mockito.when(protectedDataService.getProtectedData("invalidToken")).thenReturn(List.of());
-        List<ProtectedData> response = protectedDataController.getProtectedData("invalidToken");
-        assertEquals(List.of(), response);
+        ResponseEntity<List<ProtectedData>> expectedResponse = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        Mockito.when(protectedDataService.getProtectedData("invalidToken")).thenReturn(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null));
+        ResponseEntity<List<ProtectedData>> response = protectedDataController.getProtectedData("invalidToken");
+        assertEquals(expectedResponse.getStatusCode() , response.getStatusCode());
 
     }
 
     @Test
     @DisplayName("When given an invalid access token and insurance number null is returned")
     void getProtectedDataForOnePersonWithInvalidToken() {
-
-        Mockito.when(protectedDataService.getProtectedDataForOnePerson("invalidToken", "invalidInsuranceNumber")).thenReturn(null);
-        ProtectedData response = protectedDataController.getProtectedDataForOnePerson("invalidToken", "invalidInsuranceNumber");
-        assertEquals(null, response);
+        ResponseEntity <ProtectedData> expectedResponse = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        Mockito.when(protectedDataService.getProtectedDataForOnePerson("invalidToken", "invalidInsuranceNumber")).thenReturn(expectedResponse);
+        ResponseEntity<ProtectedData> response = protectedDataController.getProtectedDataForOnePerson("invalidToken", "invalidInsuranceNumber");
+        assertEquals(expectedResponse.getStatusCode() , response.getStatusCode());
     }
 }

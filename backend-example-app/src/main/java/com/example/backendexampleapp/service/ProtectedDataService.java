@@ -3,17 +3,15 @@ package com.example.backendexampleapp.service;
 import com.example.backendexampleapp.model.ProtectedData;
 import com.example.backendexampleapp.model.TokenData;
 import com.example.backendexampleapp.repository.ProtectedDataRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,36 +20,34 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class ProtectedDataService {
 
-    @Autowired
     private final ProtectedDataRepository protectedDataRepository;
 
-    @Autowired
     private final  RestTemplate restTemplate;
 
     @Value("${facade.protected-url}")
-    private String facadeProtectedUrl;
+    String facadeProtectedUrl;
 
 
-    public List<ProtectedData> getProtectedData(String token) {
+    public ResponseEntity<List<ProtectedData>> getProtectedData(String token) {
         TokenData data = new TokenData(token);
         HttpEntity<TokenData> request = new HttpEntity<>(data, null);
         try {
             restTemplate.exchange(facadeProtectedUrl, HttpMethod.POST, request, String.class);
-        } catch (RestClientResponseException e) {
-            return List.of();
+        }  catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-        return protectedDataRepository.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(protectedDataRepository.findAll());
     }
 
-    public ProtectedData getProtectedDataForOnePerson(String token, String insuranceNumber) {
+    public ResponseEntity<ProtectedData> getProtectedDataForOnePerson(String token, String insuranceNumber) {
         TokenData data = new TokenData(token);
         HttpEntity<TokenData> request = new HttpEntity<>(data, null);
         try {
             restTemplate.exchange(facadeProtectedUrl, HttpMethod.POST, request, String.class);
-        } catch (RestClientResponseException e) {
-            return null;
+        }  catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-        return protectedDataRepository.findById(insuranceNumber).orElse(null);
+        return ResponseEntity.status(HttpStatus.OK).body(protectedDataRepository.findById(insuranceNumber).orElse(null));
     }
 
     @PostConstruct

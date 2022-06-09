@@ -31,7 +31,6 @@ class FacadeEndpointServiceTest {
 
     @BeforeEach
     public void setUp() {
-        facadeEndpointService = new FacadeEndpointService(restTemplate);
         ReflectionTestUtils.setField(facadeEndpointService, "facadeTokenUrl", "http://localhost:8090/token");
         ReflectionTestUtils.setField(facadeEndpointService, "facadeIntrospectUrl", "http://localhost:8090/introspect");
         ReflectionTestUtils.setField(facadeEndpointService, "facadeUserinfoUrl", "http://localhost:8090/userinfo");

@@ -1,6 +1,5 @@
 package com.example.backendexampleapp.controller;
 
-import com.example.backendexampleapp.model.TokenData;
 import com.example.backendexampleapp.service.FacadeEndpointService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -58,7 +57,7 @@ class FacadeEndpointControllerIT {
     @Test
     @DisplayName("Given valid username and password receive the token")
     void getToken() throws Exception {
-        ResponseEntity<String> response = ResponseEntity.status(200).body("validToken");
+        ResponseEntity<String> response = ResponseEntity.status(HttpStatus.OK).body("validToken");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
 
         MvcResult mvcResult = mockMvc.perform(post("/token")
