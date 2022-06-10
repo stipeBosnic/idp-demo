@@ -1,6 +1,6 @@
 package com.example.idpfacade.controller;
 
-import com.example.idpfacade.model.TokenData;
+import com.example.idpfacade.dto.TokenData;
 import com.example.idpfacade.service.EndpointService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

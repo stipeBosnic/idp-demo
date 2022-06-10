@@ -1,6 +1,6 @@
 package com.example.idpfacade.service;
 
-import com.example.idpfacade.model.TokenData;
+import com.example.idpfacade.dto.TokenData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

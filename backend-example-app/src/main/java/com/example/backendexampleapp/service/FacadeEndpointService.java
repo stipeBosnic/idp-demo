@@ -1,6 +1,6 @@
 package com.example.backendexampleapp.service;
 
-import com.example.backendexampleapp.model.TokenData;
+import com.example.backendexampleapp.dto.TokenData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

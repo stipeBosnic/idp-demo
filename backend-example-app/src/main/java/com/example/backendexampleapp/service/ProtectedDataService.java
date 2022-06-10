@@ -1,17 +1,14 @@
 package com.example.backendexampleapp.service;
 
+import com.example.backendexampleapp.dto.TokenData;
 import com.example.backendexampleapp.model.ProtectedData;
-import com.example.backendexampleapp.model.TokenData;
 import com.example.backendexampleapp.repository.ProtectedDataRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

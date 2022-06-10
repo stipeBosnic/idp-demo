@@ -1,6 +1,8 @@
-package com.example.idpfacade.model;
+package com.example.idpfacade.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor

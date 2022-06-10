@@ -1,6 +1,9 @@
-package com.example.backendexampleapp.model;
+package com.example.backendexampleapp.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
