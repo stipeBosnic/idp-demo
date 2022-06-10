@@ -74,12 +74,6 @@
 			<artifactId>springfox-boot-starter</artifactId>
 			<version>3.0.0</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.jacoco</groupId>
-			<artifactId>jacoco-maven-plugin</artifactId>
-			<version>0.8.8</version>
-		</dependency>
     </dependencies>
 
 	<build>
@@ -102,6 +96,7 @@
 					<version>3.9.1.2184</version>
 				</plugin>
 		</plugins>
+		<finalName>backend-example-app</finalName>
 	</build>
 
 </project>

@@ -40,7 +40,7 @@ class FacadeEndpointServiceTest {
 
     @Test
     @DisplayName("Given a valid refresh token user logouts")
-    void userLogoutsWithValidRefreshToken() {
+    void userLogoutsWithValidRefreshTokenTest() {
         ResponseEntity<String> expectedResponse = ResponseEntity.ok("");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(expectedResponse);
         ResponseEntity<String> response = facadeEndpointService.logout("refreshToken");
@@ -49,7 +49,7 @@ class FacadeEndpointServiceTest {
 
     @Test
     @DisplayName("Given valid username and password receive the token")
-    void getTokenAfterProvidingData() {
+    void getTokenAfterProvidingDataTest() {
         ResponseEntity<String> expectedResponse = ResponseEntity.ok("token");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(expectedResponse);
         ResponseEntity<String> response = facadeEndpointService.getToken("test", "test");
@@ -58,7 +58,7 @@ class FacadeEndpointServiceTest {
 
     @Test
     @DisplayName("Given a valid user token receive token data")
-    void getIntrospect() {
+    void getIntrospectTest() {
         ResponseEntity<String> expectedResponse = ResponseEntity.ok("introspect");
         when(restTemplate.exchange(anyString(),eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(expectedResponse);
         ResponseEntity<String> response = facadeEndpointService.getIntrospect("validToken");
@@ -67,7 +67,7 @@ class FacadeEndpointServiceTest {
 
     @Test
     @DisplayName("Given a valid access token user receives userinfo")
-    void getUserInfo() {
+    void getUserInfoTest() {
         ResponseEntity<String> expectedResponse = ResponseEntity.ok("userinfo");
         when(restTemplate.exchange(anyString(),eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(expectedResponse);
         ResponseEntity<String> response = facadeEndpointService.getUserInfo("validToken");
@@ -76,6 +76,6 @@ class FacadeEndpointServiceTest {
 
     @Test
     @DisplayName("Given an invalid username and password response if 401 unauthorized")
-    void getTokenAfterProvidingInvalidData() {
+    void tryToGetTokenAfterProvidingInvalidDataTest() {
     }
 }
