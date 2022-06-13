@@ -58,7 +58,7 @@ class EndpointControllerIT {
 
     @Test
     @DisplayName("Given valid params receive the token")
-    void getToken() throws Exception {
+    void getTokenTest() throws Exception {
         TokenData validInfo = new TokenData("mate", "mate");
         ResponseEntity<String> response = ResponseEntity.status(200).body("validToken");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
@@ -74,7 +74,7 @@ class EndpointControllerIT {
 
     @Test
     @DisplayName("Given invalid params response is 401 UNAUTHORIZED")
-    void tryToGetTokenWithInvalidParams() throws Exception {
+    void tryToGetTokenWithInvalidParamsTest() throws Exception {
         TokenData invalidInfo = new TokenData("invalidParams", "invalidParams");
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
@@ -90,7 +90,7 @@ class EndpointControllerIT {
 
     @Test
     @DisplayName("Given empty strings as params response is 401 UNAUTHORIZED")
-    void tryToGetTokenWithEmptyStringAsParams() throws Exception {
+    void tryToGetTokenWithEmptyStringAsParamsTest() throws Exception {
         TokenData invalidInfo = new TokenData("", "");
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
@@ -106,7 +106,7 @@ class EndpointControllerIT {
 
     @Test
     @DisplayName("Given null params response is 401 UNAUTHORIZED")
-    void tryToGetTokenWithNullParams() throws Exception {
+    void tryToGetTokenWithNullParamsTest() throws Exception {
         TokenData invalidInfo = new TokenData(null, null);
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
@@ -122,7 +122,7 @@ class EndpointControllerIT {
 
     @Test
     @DisplayName("Given valid refresh token user logouts")
-    void logout() throws Exception {
+    void logoutTest() throws Exception {
         TokenData validToken = new TokenData("validRefreshToken");
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
@@ -138,7 +138,7 @@ class EndpointControllerIT {
 
     @Test
     @DisplayName("Given an invalid refresh token response is 400 BAD REQUEST")
-    void tryToLogoutWithInvalidRefreshToken() throws Exception {
+    void tryToLogoutWithInvalidRefreshTokenTest() throws Exception {
         TokenData invalidToken = new TokenData("invalidRefreshToken");
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("keycloakMessage");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
@@ -154,7 +154,7 @@ class EndpointControllerIT {
 
     @Test
     @DisplayName("Given an empty string as refresh token response is 400 BAD REQUEST")
-    void tryToLogoutWithAnEmptyStringAsRefreshToken() throws Exception {
+    void tryToLogoutWithAnEmptyStringAsRefreshTokenTest() throws Exception {
         TokenData emptyToken = new TokenData("");
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("keycloakMessage");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
@@ -170,7 +170,7 @@ class EndpointControllerIT {
 
     @Test
     @DisplayName("Given a null refresh token response is 400 BAD REQUEST")
-    void tryToLogoutWithNullRefreshToken() throws Exception {
+    void tryToLogoutWithNullRefreshTokenTest() throws Exception {
         TokenData nullToken = new TokenData(null);
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("keycloakMessage");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);

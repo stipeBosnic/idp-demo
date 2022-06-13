@@ -19,7 +19,7 @@ public class ProtectedDataService {
 
     private final ProtectedDataRepository protectedDataRepository;
 
-    private final  RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     @Value("${facade.protected-url}")
     String facadeProtectedUrl;

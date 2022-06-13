@@ -26,7 +26,7 @@ class UnprotectedDataControllerTest {
 
     @Test
     @DisplayName("When making a call to the unprotected data endpoint receive unprotected data")
-    void getUnprotectedData() {
+    void getUnprotectedDataTest() {
         List<UnprotectedData> unprotectedData = new ArrayList<>();
         when(unprotectedDataService.getUnprotectedData()).thenReturn(unprotectedData);
         List<UnprotectedData> expectedResponse = unprotectedDataController.getUnprotectedData();

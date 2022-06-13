@@ -45,7 +45,7 @@ class ProtectedDataControllerTest {
 
     @Test
     @DisplayName("When given valid access token protected data is returned")
-    void getProtectedData() {
+    void getProtectedDataTest() {
 
         ProtectedData person1 = ProtectedData
                 .builder()
@@ -73,7 +73,7 @@ class ProtectedDataControllerTest {
 
     @Test
     @DisplayName("When given a valid access token and insurance number protected data is returned")
-    void getProtectedDataForOnePerson() {
+    void getProtectedDataForOnePersonTest() {
 
         ProtectedData person = ProtectedData
                 .builder()
@@ -92,7 +92,7 @@ class ProtectedDataControllerTest {
 
     @Test
     @DisplayName("When given a null access token null is returned")
-    void getProtectedDataWithNullToken() {
+    void getProtectedDataWithNullTokenTest() {
         ResponseEntity<List<ProtectedData>> expectedResponse = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         Mockito.when(protectedDataService.getProtectedData(null)).thenReturn(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null));
         ResponseEntity<List<ProtectedData>> response = protectedDataController.getProtectedData(null);
@@ -101,7 +101,7 @@ class ProtectedDataControllerTest {
 
     @Test
     @DisplayName("When given an empty string as access token null is returned")
-    void getProtectedDataWithEmptyToken() {
+    void getProtectedDataWithEmptyTokenTest() {
         ResponseEntity<List<ProtectedData>> expectedResponse = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         Mockito.when(protectedDataService.getProtectedData("")).thenReturn(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null));
         ResponseEntity<List<ProtectedData>> response = protectedDataController.getProtectedData("");
@@ -110,7 +110,7 @@ class ProtectedDataControllerTest {
 
     @Test
     @DisplayName("When given an invalid access token null is returned")
-    void getProtectedDataWithInvalidToken() {
+    void getProtectedDataWithInvalidTokenTest() {
         ResponseEntity<List<ProtectedData>> expectedResponse = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         Mockito.when(protectedDataService.getProtectedData("invalidToken")).thenReturn(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null));
         ResponseEntity<List<ProtectedData>> response = protectedDataController.getProtectedData("invalidToken");
@@ -120,7 +120,7 @@ class ProtectedDataControllerTest {
 
     @Test
     @DisplayName("When given an invalid access token and insurance number null is returned")
-    void getProtectedDataForOnePersonWithInvalidToken() {
+    void getProtectedDataForOnePersonWithInvalidTokenTest() {
         ResponseEntity <ProtectedData> expectedResponse = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         Mockito.when(protectedDataService.getProtectedDataForOnePerson("invalidToken", "invalidInsuranceNumber")).thenReturn(expectedResponse);
         ResponseEntity<ProtectedData> response = protectedDataController.getProtectedDataForOnePerson("invalidToken", "invalidInsuranceNumber");

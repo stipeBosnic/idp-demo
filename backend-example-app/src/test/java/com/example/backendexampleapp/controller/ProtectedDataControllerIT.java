@@ -107,7 +107,7 @@ class ProtectedDataControllerIT {
 
     @Test
     @DisplayName("When given invalid access token empty list is returned")
-    void tryToGetProtectedDataWithInvalidToken() throws Exception {
+    void tryToGetProtectedDataWithInvalidTokenTest() throws Exception {
 
         ResponseEntity<String> response = ResponseEntity.status(401).body("");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
@@ -121,7 +121,7 @@ class ProtectedDataControllerIT {
 
     @Test
     @DisplayName("When given empty string as an access token empty list is returned")
-    void tryToGetProtectedDataWithAnEmptyStringAsToken() throws Exception {
+    void tryToGetProtectedDataWithAnEmptyStringAsTokenTest() throws Exception {
 
         ResponseEntity<String> response = ResponseEntity.status(401).body("");
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
@@ -135,7 +135,7 @@ class ProtectedDataControllerIT {
 
     @Test
     @DisplayName("When given valid access token and insurance number protected data is returned")
-    void getProtectedDataForOnePerson() throws Exception {
+    void getProtectedDataForOnePersonTest() throws Exception {
 
         ProtectedData person = ProtectedData
                 .builder()

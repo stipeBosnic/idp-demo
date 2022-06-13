@@ -19,7 +19,7 @@ class SimpleKeycloakTest {
 
     @Test
     @DisplayName("Test if keycloak sends the token when given valid data")
-    void testKeycloak() {
+    void testKeycloakTest() {
 
         assertTrue(keycloakContainer.isRunning());
 
@@ -43,7 +43,7 @@ class SimpleKeycloakTest {
     }
     @Test
     @DisplayName("Test if unauthorized user can access the token")
-    void testKeycloakUnauthorizedUser() {
+    void testKeycloakUnauthorizedUserTest() {
 
         String authServerUrl = keycloakContainer.getAuthServerUrl();
 
