@@ -26,6 +26,11 @@ services:
       KEYCLOAK_PASSWORD: admin
     volumes:
       - keycloak-data:/opt/jboss/keycloak/standalone/data/
+      - ./keycloak/realms:/tmp/import
+    command:
+      - "-Dkeycloak.migration.action=import"
+      - "-Dkeycloak.migration.provider=dir"
+      - "-Dkeycloak.migration.dir=/tmp/import"
     ports:
       - "8180:8180"
 
