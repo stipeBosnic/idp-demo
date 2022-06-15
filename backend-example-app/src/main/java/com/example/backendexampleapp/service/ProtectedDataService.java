@@ -26,8 +26,9 @@ public class ProtectedDataService {
         return ResponseEntity.status(HttpStatus.OK).body(protectedDataRepository.findAll());
     }
 
-    public ResponseEntity<Optional<ProtectedData>> getProtectedDataForOnePerson(String insuranceNumber) {
-        return ResponseEntity.status(HttpStatus.OK).body(protectedDataRepository.findById(insuranceNumber));
+    public ResponseEntity<ProtectedData> getProtectedDataForOnePerson(String insuranceNumber) {
+        return ResponseEntity.status(HttpStatus.OK).body(protectedDataRepository.findById(insuranceNumber)
+                .orElseThrow(() -> new IllegalStateException("Person " + insuranceNumber + " does not exist!")));
     }
 
     @PostConstruct

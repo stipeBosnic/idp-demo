@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Optional;
@@ -32,18 +33,18 @@ public class ProtectedDataController {
         HttpEntity<TokenData> request = new HttpEntity<>(data, null);
         try {
             restTemplate.exchange(facadeProtectedUrl, HttpMethod.POST, request, String.class);
-        }  catch (HttpClientErrorException e) {
+        }  catch (RestClientResponseException e) {
             return ResponseEntity.status(e.getRawStatusCode()).body(null);
         }
         return protectedDataService.getProtectedData();
     }
     @GetMapping("/protectedperson")
-    public ResponseEntity<Optional<ProtectedData>> getProtectedDataForOnePerson(@RequestParam String token, @RequestParam String insuranceNumber) {
+    public ResponseEntity<ProtectedData> getProtectedDataForOnePerson(@RequestParam String token, @RequestParam String insuranceNumber) {
         TokenData data = new TokenData(token);
         HttpEntity<TokenData> request = new HttpEntity<>(data, null);
         try {
             restTemplate.exchange(facadeProtectedUrl, HttpMethod.POST, request, String.class);
-        }  catch (HttpClientErrorException e) {
+        }  catch (RestClientResponseException e) {
             return ResponseEntity.status(e.getRawStatusCode()).body(null);
         }
         return protectedDataService.getProtectedDataForOnePerson(insuranceNumber);

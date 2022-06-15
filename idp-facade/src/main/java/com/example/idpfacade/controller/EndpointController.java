@@ -57,7 +57,7 @@ public class EndpointController {
             return ResponseEntity.status(e.getRawStatusCode()).body(e.getResponseBodyAsString());
         }
     }
-//
+
     @PostMapping("/introspect")
     public ResponseEntity<String> getIntrospect(@RequestBody TokenData tokenData) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();

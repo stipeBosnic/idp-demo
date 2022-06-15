@@ -1,0 +1,34 @@
+version: '3'
+services:
+  backend-example-app:
+    image: backend-app:1.0
+    build: ./backend-example-app
+    container_name: backend-app
+    restart: always
+    ports:
+      - "8080:8080"
+  
+  idp-facade:
+    image: idp-facade:1.0
+    build: ./idp-facade
+    container_name: idp-facade
+    restart: always
+    ports:
+      - "8090:8090"
+  
+  keycloak:
+    image: custom-keycloak:1.0
+    build: ./keycloak
+    container_name: keycloak
+    restart: always
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    volumes:
+      - keycloak-data:/opt/jboss/keycloak/standalone/data/
+    ports:
+      - "8180:8180"
+
+volumes:
+  keycloak-data:
+    driver: local

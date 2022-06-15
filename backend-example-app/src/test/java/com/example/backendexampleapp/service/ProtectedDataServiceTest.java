@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -79,27 +80,6 @@ class ProtectedDataServiceTest {
                 .build();
 
         when(protectedDataRepository.findById(anyString())).thenReturn(Optional.of(protectedData));
-        ResponseEntity<Optional<ProtectedData>> response = protectedDataService.getProtectedDataForOnePerson("validInsuranceNumber");
-        assertEquals(protectedData, response.getBody().get());
+        assertEquals(protectedData, protectedDataService.getProtectedDataForOnePerson("validInsuranceNumber").getBody());
     }
-
-    @Test
-    @DisplayName("Given a valid access token and invalid insurance number response is null")
-    void tryToGetProtectedDataForASinglePersonWithInvalidInsuranceNumberTest() {
-
-        ProtectedData protectedData = ProtectedData
-                .builder()
-                .name("Max")
-                .surname("Musterman")
-                .old(25)
-                .gender("m")
-                .insuranceNumber("123456")
-                .build();;
-
-        when(protectedDataRepository.findById(anyString())).thenReturn(null);
-        assertNull(protectedDataService.getProtectedDataForOnePerson("invalid").getBody());
-    }
-
-
-
 }

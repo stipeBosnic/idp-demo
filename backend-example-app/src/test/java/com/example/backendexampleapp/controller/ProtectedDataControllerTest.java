@@ -93,9 +93,9 @@ class ProtectedDataControllerTest {
                 .build();
 
         Mockito.when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(ResponseEntity.status(200).body("token"));
-        ResponseEntity<Optional<ProtectedData>> expectedResponse = ResponseEntity.status(200).body(Optional.of(person));
-        Mockito.when(protectedDataService.getProtectedDataForOnePerson("validToken")).thenReturn(expectedResponse);
-        assertEquals(person, expectedResponse.getBody().get());
+        ResponseEntity <ProtectedData> expectedResponse = ResponseEntity.status(200).body(person);
+        Mockito.when(protectedDataService.getProtectedDataForOnePerson("validInsuranceNumber")).thenReturn(expectedResponse);
+        assertEquals(person, protectedDataController.getProtectedDataForOnePerson("validToken", "validInsuranceNumber").getBody());
     }
 
     @Test
