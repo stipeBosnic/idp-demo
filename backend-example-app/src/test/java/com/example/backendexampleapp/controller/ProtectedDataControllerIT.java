@@ -2,18 +2,13 @@ package com.example.backendexampleapp.controller;
 
 import com.example.backendexampleapp.model.ProtectedData;
 import com.example.backendexampleapp.repository.ProtectedDataRepository;
-import com.example.backendexampleapp.service.FacadeEndpointService;
 import com.example.backendexampleapp.service.ProtectedDataService;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,11 +22,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.Reader;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
@@ -102,36 +96,8 @@ class ProtectedDataControllerIT {
                 .andExpect(status().isOk())
                 .andReturn();
         assertEquals(protectedDataJson, mvcResult.getResponse().getContentAsString());
-//        verify(restTemplate).exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class)))
     }
 
-    @Test
-    @DisplayName("When given invalid access token empty list is returned")
-    void tryToGetProtectedDataWithInvalidTokenTest() throws Exception {
-
-        ResponseEntity<String> response = ResponseEntity.status(401).body("");
-        when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
-        when(protectedDataRepository.findAll()).thenReturn(List.of());
-        MvcResult mvcResult = mockMvc.perform(get("/protected")
-                        .param("token", "invalidToken"))
-                .andExpect(status().isOk())
-                .andReturn();
-        assertEquals(List.of().toString(), mvcResult.getResponse().getContentAsString());
-    }
-
-    @Test
-    @DisplayName("When given empty string as an access token empty list is returned")
-    void tryToGetProtectedDataWithAnEmptyStringAsTokenTest() throws Exception {
-
-        ResponseEntity<String> response = ResponseEntity.status(401).body("");
-        when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(response);
-        when(protectedDataRepository.findAll()).thenReturn(List.of());
-        MvcResult mvcResult = mockMvc.perform(get("/protected")
-                        .param("token", ""))
-                .andExpect(status().isOk())
-                .andReturn();
-        assertEquals(List.of().toString(), mvcResult.getResponse().getContentAsString());
-    }
 
     @Test
     @DisplayName("When given valid access token and insurance number protected data is returned")

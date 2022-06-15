@@ -131,9 +131,18 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.sonarsource.scanner.maven</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>3.9.1.2184</version>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.4</version>
+				<executions>
+					<execution>
+						<id>report</id>
+						<goals>
+							<goal>report-aggregate</goal>
+						</goals>
+						<phase>verify</phase>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 		<finalName>idp-facade</finalName>
