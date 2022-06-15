@@ -31,6 +31,7 @@ services:
       - "-Dkeycloak.migration.action=import"
       - "-Dkeycloak.migration.provider=dir"
       - "-Dkeycloak.migration.dir=/tmp/import"
+      - "-Djboss.socket.binding.port-offset=100"
     ports:
       - "8180:8180"
 
