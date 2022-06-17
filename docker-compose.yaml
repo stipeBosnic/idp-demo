@@ -18,7 +18,6 @@ services:
 
   keycloak:
     image: custom-keycloak:1.0
-    build: ./keycloak
     container_name: keycloak
     restart: always
     environment:
