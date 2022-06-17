@@ -7,7 +7,7 @@ services:
     restart: always
     ports:
       - "8080:8080"
-  
+
   idp-facade:
     image: idp-facade:1.0
     build: ./idp-facade
@@ -15,7 +15,7 @@ services:
     restart: always
     ports:
       - "8090:8090"
-  
+
   keycloak:
     image: custom-keycloak:1.0
     build: ./keycloak
@@ -24,13 +24,15 @@ services:
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+      DB_VENDOR: h2
     volumes:
       - keycloak-data:/opt/jboss/keycloak/standalone/data/
-      - ./keycloak/realms:/tmp/import
+      - ./keycloak/realms/kcrealm.json:/tmp/realm-export.json
     command:
       - "-Dkeycloak.migration.action=import"
-      - "-Dkeycloak.migration.provider=dir"
-      - "-Dkeycloak.migration.dir=/tmp/import"
+      - "-Dkeycloak.migration.provider=singleFile"
+      - "-Dkeycloak.migration.file=/tmp/realm-export.json"
+      - "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING"
       - "-Djboss.socket.binding.port-offset=100"
     ports:
       - "8180:8180"

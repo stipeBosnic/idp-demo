@@ -1,5 +1,4 @@
 package com.example.backendexampleapp.controller;
-
 import com.example.backendexampleapp.model.UnprotectedData;
 import com.example.backendexampleapp.service.UnprotectedDataService;
 import lombok.RequiredArgsConstructor;
