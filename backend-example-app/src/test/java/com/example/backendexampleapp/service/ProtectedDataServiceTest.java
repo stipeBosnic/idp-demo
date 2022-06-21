@@ -13,6 +13,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -55,7 +57,7 @@ class ProtectedDataServiceTest {
                 .insuranceNumber("654321")
                 .build();
 
-        List<ProtectedData> expectedProtectedData = List.of(person1, person2).stream().toList();
+        List<ProtectedData> expectedProtectedData= Stream.of(person1,person2).toList();
         when(protectedDataRepository.findAll()).thenReturn(expectedProtectedData);
         List<ProtectedData> response = protectedDataService.getProtectedData();
         assertEquals(expectedProtectedData, response);

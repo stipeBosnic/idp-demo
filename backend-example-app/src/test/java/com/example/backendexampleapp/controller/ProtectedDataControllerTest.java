@@ -15,6 +15,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -54,7 +56,7 @@ class ProtectedDataControllerTest {
                 .insuranceNumber("654321")
                 .build();
 
-        List<ProtectedData> protectedData = List.of(person1, person2).stream().toList();
+        List<ProtectedData> protectedData = Stream.of(person1, person2).toList();
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(ResponseEntity.status(200).body("token"));
         when(protectedDataService.getProtectedData()).thenReturn(protectedData);
         ResponseEntity<List<ProtectedData>> response = protectedDataController.getProtectedData("validToken");
