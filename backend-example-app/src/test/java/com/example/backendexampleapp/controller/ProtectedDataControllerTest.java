@@ -56,7 +56,7 @@ class ProtectedDataControllerTest {
 
         List<ProtectedData> protectedData = List.of(person1, person2).stream().toList();
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(ResponseEntity.status(200).body("token"));
-        when(protectedDataService.getProtectedData()).thenReturn(ResponseEntity.status(200).body(protectedData));
+        when(protectedDataService.getProtectedData()).thenReturn(protectedData);
         ResponseEntity<List<ProtectedData>> response = protectedDataController.getProtectedData("validToken");
         assertEquals(protectedData, response.getBody());
     }
@@ -83,7 +83,7 @@ class ProtectedDataControllerTest {
     @DisplayName("When given a valid access token and insurance number protected data is returned")
     void getProtectedDataForOnePersonTest() {
 
-        ProtectedData person = ProtectedData
+        ProtectedData expectedResponse = ProtectedData
                 .builder()
                 .name("Max")
                 .surname("Musterman")
@@ -93,9 +93,8 @@ class ProtectedDataControllerTest {
                 .build();
 
         Mockito.when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenReturn(ResponseEntity.status(200).body("token"));
-        ResponseEntity <ProtectedData> expectedResponse = ResponseEntity.status(200).body(person);
         Mockito.when(protectedDataService.getProtectedDataForOnePerson("validInsuranceNumber")).thenReturn(expectedResponse);
-        assertEquals(person, protectedDataController.getProtectedDataForOnePerson("validToken", "validInsuranceNumber").getBody());
+        assertEquals(expectedResponse, protectedDataController.getProtectedDataForOnePerson("validToken", "validInsuranceNumber").getBody());
     }
 
     @Test

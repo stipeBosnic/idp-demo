@@ -8,14 +8,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -29,9 +27,6 @@ class ProtectedDataServiceTest {
 
     @MockBean
     ProtectedDataRepository protectedDataRepository;
-
-    @MockBean
-    RestTemplate restTemplate;
 
     @BeforeEach
     public void setUp() {
@@ -62,8 +57,8 @@ class ProtectedDataServiceTest {
 
         List<ProtectedData> expectedProtectedData = List.of(person1, person2).stream().toList();
         when(protectedDataRepository.findAll()).thenReturn(expectedProtectedData);
-        ResponseEntity<List<ProtectedData>> response = protectedDataService.getProtectedData();
-        assertEquals(expectedProtectedData, response.getBody());
+        List<ProtectedData> response = protectedDataService.getProtectedData();
+        assertEquals(expectedProtectedData, response);
     }
 
     @Test
@@ -80,6 +75,6 @@ class ProtectedDataServiceTest {
                 .build();
 
         when(protectedDataRepository.findById(anyString())).thenReturn(Optional.of(protectedData));
-        assertEquals(protectedData, protectedDataService.getProtectedDataForOnePerson("validInsuranceNumber").getBody());
+        assertEquals(protectedData, protectedDataService.getProtectedDataForOnePerson("validInsuranceNumber"));
     }
 }

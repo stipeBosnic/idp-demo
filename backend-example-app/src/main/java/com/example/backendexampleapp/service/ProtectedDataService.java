@@ -21,13 +21,13 @@ public class ProtectedDataService {
     String facadeProtectedUrl;
 
 
-    public ResponseEntity<List<ProtectedData>> getProtectedData() {
-        return ResponseEntity.status(HttpStatus.OK).body(protectedDataRepository.findAll());
+    public List<ProtectedData> getProtectedData() {
+        return protectedDataRepository.findAll();
     }
 
-    public ResponseEntity<ProtectedData> getProtectedDataForOnePerson(String insuranceNumber) {
-        return ResponseEntity.status(HttpStatus.OK).body(protectedDataRepository.findById(insuranceNumber)
-                .orElseThrow(() -> new IllegalStateException("Person " + insuranceNumber + " does not exist!")));
+    public ProtectedData getProtectedDataForOnePerson(String insuranceNumber) {
+        return protectedDataRepository.findById(insuranceNumber)
+                .orElseThrow(() -> new IllegalStateException("Person " + insuranceNumber + " does not exist!"));
     }
 
     @PostConstruct

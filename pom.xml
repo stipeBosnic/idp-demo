@@ -9,7 +9,6 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
-
     <modules>
         <module>idp-facade</module>
         <module>backend-example-app</module>
@@ -18,12 +17,13 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-            <sonar.coverage.jacoco.xmlReportPaths>C:\Users\StipeBosnić\OneDrive - Unique People s.r.o\Desktop\projects\idp-demo/../path_to_module_with_report/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>C:\Users\StipeBosnić\OneDrive - Unique People
+            s.r.o\Desktop\projects\idp-demo/../path_to_module_with_report/target/site/jacoco-aggregate/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -48,11 +48,6 @@
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>3.9.1.2184</version>
             </plugin>
-
         </plugins>
-
-
     </build>
-
-
 </project>

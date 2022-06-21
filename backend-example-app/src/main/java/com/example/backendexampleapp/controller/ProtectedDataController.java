@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +35,7 @@ public class ProtectedDataController {
         }  catch (RestClientResponseException e) {
             return ResponseEntity.status(e.getRawStatusCode()).body(null);
         }
-        return protectedDataService.getProtectedData();
+        return ResponseEntity.status(HttpStatus.OK).body(protectedDataService.getProtectedData());
     }
     @GetMapping("/protectedperson")
     public ResponseEntity<?> getProtectedDataForOnePerson(@RequestParam String token, @RequestParam String insuranceNumber) {
@@ -46,9 +47,9 @@ public class ProtectedDataController {
             return ResponseEntity.status(e.getRawStatusCode()).body(null);
         }
         try {
-            return protectedDataService.getProtectedDataForOnePerson(insuranceNumber);
+            return ResponseEntity.status(HttpStatus.OK).body(protectedDataService.getProtectedDataForOnePerson(insuranceNumber));
         } catch (IllegalStateException e) {
-            return ResponseEntity.status(200).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.OK).body(e.getMessage());
         }
     }
 }
