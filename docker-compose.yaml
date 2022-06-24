@@ -2,6 +2,8 @@ version: '3'
 services:
   backend-example-app:
     image: backend-app:1.0
+    networks:
+      - backend-facade-keycloak
     build: ./backend-example-app
     container_name: backend-app
     restart: always
@@ -10,6 +12,8 @@ services:
 
   idp-facade:
     image: idp-facade:1.0
+    networks:
+      - backend-facade-keycloak
     build: ./idp-facade
     container_name: idp-facade
     restart: always
@@ -17,7 +21,9 @@ services:
       - "8090:8090"
 
   keycloak:
-    image: custom-keycloak:1.0
+    image: jboss/keycloak:16.1.1
+    networks:
+      - backend-facade-keycloak
     container_name: keycloak
     restart: always
     environment:
@@ -39,3 +45,7 @@ services:
 volumes:
   keycloak-data:
     driver: local
+
+networks:
+  backend-facade-keycloak:
+

@@ -16,7 +16,6 @@ public class TokenData {
     private String clientId;
     private String clientSecret;
     private String token;
-
     private String refreshToken;
 
 

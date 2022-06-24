@@ -31,6 +31,5 @@ class UnprotectedDataControllerTest {
         when(unprotectedDataService.getUnprotectedData()).thenReturn(unprotectedData);
         List<UnprotectedData> expectedResponse = unprotectedDataController.getUnprotectedData();
         assertEquals(unprotectedData, expectedResponse);
-
     }
 }

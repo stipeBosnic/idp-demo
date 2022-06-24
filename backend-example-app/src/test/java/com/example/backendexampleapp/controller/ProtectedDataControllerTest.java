@@ -3,6 +3,7 @@ import com.example.backendexampleapp.model.ProtectedData;
 import com.example.backendexampleapp.service.ProtectedDataService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,9 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -104,15 +105,14 @@ class ProtectedDataControllerTest {
     void tryToGetProtectedDataForOnePersonWithInvalidTokenTest() {
         HttpClientErrorException expectedException = new HttpClientErrorException("", HttpStatus.UNAUTHORIZED, "", null, null, null);
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenThrow(expectedException);
-        assertEquals(expectedException.getStatusCode(), protectedDataController.getProtectedData("invalidToken").getStatusCode());
+        assertEquals(expectedException.getStatusCode(), protectedDataController.getProtectedDataForOnePerson("invalidToken", "invalidNumber").getStatusCode());
     }
 
     @Test
-    @DisplayName("When given an empty string as access token and insurance number protected data is returned")
+    @DisplayName("When given an empty string as access token and insurance number response is 401")
     void tryToGetProtectedDataForOnePersonWithEmptyStringAsTokenTest() {
         HttpClientErrorException expectedException = new HttpClientErrorException("", HttpStatus.UNAUTHORIZED, "", null, null, null);
         when(restTemplate.exchange(anyString(), eq(HttpMethod.POST), Mockito.any(HttpEntity.class), eq(String.class))).thenThrow(expectedException);
-        assertEquals(expectedException.getStatusCode(), protectedDataController.getProtectedData("").getStatusCode());
+        assertEquals(expectedException.getStatusCode(), protectedDataController.getProtectedDataForOnePerson("","").getStatusCode());
     }
-
 }

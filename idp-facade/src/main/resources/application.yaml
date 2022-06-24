@@ -12,3 +12,6 @@ client-secret: NfPFBF9Cjqfpd7GcOH6uVVQ9EevZHfBf
 server:
   port: '8090'
 introspect-uri: http://localhost:8180/auth/realms/idp-provider/protocol/openid-connect/token/introspect
+
+
+
