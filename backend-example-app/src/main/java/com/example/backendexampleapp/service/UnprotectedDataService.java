@@ -29,6 +29,6 @@ public class UnprotectedDataService {
         unprotectedDataRepository.saveAll(
                 Stream.of(
                         new UnprotectedData("Lorem Ipsum is simply dummy text of the printing and typesetting industry",date)
-                ).collect(Collectors.toList()));
+                ).toList());
     }
 }

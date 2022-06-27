@@ -38,6 +38,7 @@ public class EndpointController {
         map.add("client_secret", clientSecret);
         map.add("refresh_token", tokenData.getRefreshToken());
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);
+
         try {
             return restTemplate.exchange(keycloakLogout, HttpMethod.POST, request, String.class);
         } catch (RestClientResponseException e) {
@@ -51,6 +52,7 @@ public class EndpointController {
         headers.add("Authorization", "Bearer " + tokenData.getToken());
         headers.add("Content-Type", "application/x-www-form-urlencoded");
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(null, headers);
+
         try {
             return restTemplate.exchange(keycloakUserInfo, HttpMethod.POST, request, String.class);
         } catch (RestClientResponseException e) {
@@ -65,6 +67,7 @@ public class EndpointController {
         map.add("client_secret", clientSecret);
         map.add("token", tokenData.getToken());
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);
+
         return restTemplate.exchange(keycloakIntrospect, HttpMethod.POST, request, String.class);
 
     }
@@ -78,6 +81,7 @@ public class EndpointController {
         map.add("client_secret", clientSecret);
         map.add("grant_type", "password");
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);
+
         try {
             return restTemplate.exchange(keycloakToken, HttpMethod.POST, request, String.class);
         } catch (RestClientResponseException e) {

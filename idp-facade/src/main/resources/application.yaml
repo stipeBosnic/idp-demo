@@ -4,7 +4,6 @@ keycloak:
   realm: idp-provider
   resource: idp-facade
   public-client: 'false'
-  bearer-only: 'true'
 token-uri: http://localhost:8180/auth/realms/idp-provider/protocol/openid-connect/token
 endpoints-uri: http://localhost:8180/auth/realms/idp-provider/.well-known/openid-configuration
 logout: http://localhost:8180/auth/realms/idp-provider/protocol/openid-connect/logout
@@ -12,6 +11,8 @@ client-secret: NfPFBF9Cjqfpd7GcOH6uVVQ9EevZHfBf
 server:
   port: '8090'
 introspect-uri: http://localhost:8180/auth/realms/idp-provider/protocol/openid-connect/token/introspect
+
+
 
 
 
