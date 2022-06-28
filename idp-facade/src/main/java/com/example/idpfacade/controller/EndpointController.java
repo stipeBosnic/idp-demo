@@ -68,7 +68,11 @@ public class EndpointController {
         map.add("token", tokenData.getToken());
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);
 
-        return restTemplate.exchange(keycloakIntrospect, HttpMethod.POST, request, String.class);
+        try {
+            return restTemplate.exchange(keycloakIntrospect, HttpMethod.POST, request, String.class);
+        } catch (RestClientResponseException e) {
+            return ResponseEntity.status(e.getRawStatusCode()).body(e.getResponseBodyAsString());
+        }
 
     }
 
@@ -78,7 +82,6 @@ public class EndpointController {
         map.add("username", data.getUsername());
         map.add("password", data.getPassword());
         map.add("client_id", clientId);
-        map.add("client_secret", clientSecret);
         map.add("grant_type", "password");
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);
 
@@ -89,4 +92,3 @@ public class EndpointController {
         }
     }
 }
-

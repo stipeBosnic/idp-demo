@@ -4,20 +4,24 @@ facade:
   logout-url: http://localhost:8090/logout
   token-url: http://localhost:8090/token
   protected-url: http://localhost:8090/userinfo
-
-#spring:
-#  datasource:
-#    username: sa
-#    url: jdbc:h2:mem:testdb
-#    driverClassName: org.h2.Driver
-#    password: ''
-#  jpa:
-#    database-platform: org.hibernate.dialect.H2Dialect
-#  h2:
-#    console:
-#       enabled: 'true'
-#       path: /h2
-
+#
+#  #spring:
+##  datasource:
+##    username: sa
+##    url: jdbc:h2:mem:testdb
+##    driverClassName: org.h2.Driver
+##    password: ''
+##  jpa:
+##    database-platform: org.hibernate.dialect.H2Dialect
+##  h2:
+##    console:
+##       enabled: 'true'
+##       path: /h2
+#
+#
+#
+#
+#
 spring:
   jpa:
     database: POSTGRESQL
@@ -36,7 +40,3 @@ keycloak:
   realm: idp-provider
   resource: idp-facade
   public-client: 'true'
-  security-constraints[0]:
-    -authRoles[0]: admin
-    -securityCollections[0]:
-      -patterns[0]: /protected

@@ -54,7 +54,11 @@ public class FacadeEndpointController {
     public ResponseEntity<String> getIntrospect(@RequestParam String token) {
         TokenData data = new TokenData(token);
         HttpEntity<TokenData> request = new HttpEntity<>(data, null);
-        return restTemplate.exchange(facadeIntrospectUrl, HttpMethod.POST, request, String.class);
+        try {
+            return restTemplate.exchange(facadeIntrospectUrl, HttpMethod.POST, request, String.class);
+        } catch (RestClientResponseException e) {
+            return ResponseEntity.status(e.getRawStatusCode()).body(e.getResponseBodyAsString());
+        }
 
     }
 

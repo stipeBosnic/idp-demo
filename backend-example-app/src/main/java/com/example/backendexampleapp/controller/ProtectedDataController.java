@@ -26,39 +26,14 @@ public class ProtectedDataController {
     @Value("${facade.protected-url}")
     String facadeProtectedUrl;
 
-//    @GetMapping("/protected")
-//    public ResponseEntity<List<ProtectedData>> getProtectedData(@RequestParam String token) {
-//        TokenData data = new TokenData(token);
-//        HttpEntity<TokenData> request = new HttpEntity<>(data, null);
-//        try {
-//            restTemplate.exchange(facadeProtectedUrl, HttpMethod.POST, request, String.class);
-//        }  catch (RestClientResponseException e) {
-//            return ResponseEntity.status(e.getRawStatusCode()).body(null);
-//        }
-//        return ResponseEntity.status(HttpStatus.OK).body(protectedDataService.getProtectedData());
-//    }
 
     @GetMapping("/protected")
     public ResponseEntity<List<ProtectedData>> getProtectedData() {
-//        TokenData data = new TokenData(token);
-//        HttpEntity<TokenData> request = new HttpEntity<>(data, null);
-//        try {
-//            restTemplate.exchange(facadeProtectedUrl, HttpMethod.POST, request, String.class);
-//        }  catch (RestClientResponseException e) {
-//            return ResponseEntity.status(e.getRawStatusCode()).body(null);
-//        }
         return ResponseEntity.status(HttpStatus.OK).body(protectedDataService.getProtectedData());
     }
 
     @GetMapping("/protectedperson")
     public ResponseEntity<?> getProtectedDataForOnePerson(@RequestParam String token, @RequestParam String insuranceNumber) {
-        TokenData data = new TokenData(token);
-        HttpEntity<TokenData> request = new HttpEntity<>(data, null);
-        try {
-            restTemplate.exchange(facadeProtectedUrl, HttpMethod.POST, request, String.class);
-        }  catch (RestClientResponseException e) {
-            return ResponseEntity.status(e.getRawStatusCode()).body(null);
-        }
         try {
             return ResponseEntity.status(HttpStatus.OK).body(protectedDataService.getProtectedDataForOnePerson(insuranceNumber));
         } catch (IllegalStateException e) {
