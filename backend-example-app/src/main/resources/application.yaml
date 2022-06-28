@@ -5,15 +5,28 @@ facade:
   token-url: http://localhost:8090/token
   protected-url: http://localhost:8090/userinfo
 
+#spring:
+#  datasource:
+#    username: sa
+#    url: jdbc:h2:mem:testdb
+#    driverClassName: org.h2.Driver
+#    password: ''
+#  jpa:
+#    database-platform: org.hibernate.dialect.H2Dialect
+#  h2:
+#    console:
+#       enabled: 'true'
+#       path: /h2
+
 spring:
-  datasource:
-    username: sa
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    password: ''
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-  h2:
-    console:
-       enabled: 'true'
-       path: /h2
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/backend
+    username: postgres
+    password: password
+    driverClassName: org.postgresql.Driver
